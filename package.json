@@ -6,7 +6,7 @@
   "scripts": {
     "clean": "rm -rf dist",
     "copy": "cp -rp public dist",
-    "build": "tailwindcss --watch --input src/input.css --output dist/output.css",
+    "build": "tailwindcss -i src/input.css -o dist/output.css --watch",
     "watchPublic": "node watchPublic.mjs",
     "serve": "serve -p 3000 dist",
     "start": "npm-run-all -s clean copy -p build serve watchPublic"

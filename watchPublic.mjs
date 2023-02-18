@@ -1,8 +1,7 @@
 import chokidar from 'chokidar';
 import fs from 'fs';
-import fse from 'fs-extra';
 
 chokidar.watch('./public').on('all', (event, path) => {
-  fse.copySync('./public/', './dist/');
+  fs.cpSync('./public/', './dist/', { recursive: true });
   console.log(`Change detected: ${event} ${path}`);
 });

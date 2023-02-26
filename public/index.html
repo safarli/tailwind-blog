@@ -5,65 +5,289 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="output.css" />
-    <title>Hello</title>
+    <title>Ilwes</title>
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Barlow&family=Inter&family=Kanit:wght@200;400&family=Teko&display=swap');
+      @import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+
+      .hm-menu__container {
+        display: inline-block;
+        cursor: pointer;
+        margin: 0 8px;
+      }
+
+      @media (min-width: 550px) {
+        .hm-menu__container {
+          display: none;
+        }
+      }
+
+      .bar1,
+      .bar2,
+      .bar3 {
+        width: 35px;
+        height: 5px;
+        background-color: #444;
+        margin: 6px 0;
+        transition: 0.4s;
+      }
+
+      .change .bar1 {
+        transform: translate(0, 11px) rotate(-45deg);
+      }
+
+      .change .bar2 {
+        opacity: 0;
+      }
+
+      .change .bar3 {
+        transform: translate(0, -11px) rotate(45deg);
+      }
+      .side-menu__show {
+        z-index: 100;
+        transform: translateX(0%);
+      }
+      .side-menu__hide {
+        transform: translateX(-100%);
+      }
+      .backdrop {
+        display: none;
+        position: fixed;
+        background-color: rgba(0, 0, 0, 0.3);
+        width: 100vw;
+        height: 100vh;
+        z-index: 50;
+      }
+
+      .active-nav {
+        border-bottom: 4px solid #31c580;
+      }
+
+      .coupon-card {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 220px;
+        width: 340px;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translateX(-50%) translateY(-50%);
+        /* border: 2px solid rgb(128, 114, 250); */
+        z-index: 10;
+      }
+      .acrylic-back {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 5;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.18);
+        border-radius: 16px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(11px);
+        -webkit-backdrop-filter: blur(11px);
+      }
+      .card-front {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 10;
+      }
     </style>
   </head>
-  <body>
-    <!-- HEADER -->
-    <header class="flex space-x-4 justify-center items-center">
-      <img src="avatar_face.png" class="w-16 h-16 object-cover" alt="" />
-      <nav>
-        <ul class="flex space-x-4 font-kanit">
-          <li><a href="">Home</a></li>
-          <li><a href="">About</a></li>
-          <li><a href="">Contact</a></li>
-        </ul>
-      </nav>
+
+  <!-- Body -->
+  <body class="bg-gradient-to-r from-indigo-200 via-purple-200 to-pink-200">
+    <!-- Coupon Card -->
+    <div class="coupon-card">
+      <div class="acrylic-back"></div>
+      <div class="card-front flex flex-col justify-center items-center">
+        <h1 class="text-3xl text-zinc-800">Your coupon code</h1>
+        <p class="text-2xl text-green-600">UJQ-2xPC-3a</p>
+      </div>
+    </div>
+
+    <!-- Backdrop -->
+    <div id="backdrop" class="backdrop"></div>
+
+    <!-- Mobile Side Menu -->
+    <div
+      id="side-menu"
+      class="side-menu__hide fixed h-screen w-1/2 flex flex-col justify-center items-center bg-violet-200 duration-300"
+    >
+      <ul class="text-2xl">
+        <li>
+          <a class="block my-2 px-4 py-2 border-2 text-center" href="/">Home</a>
+        </li>
+        <li>
+          <a class="block my-2 px-4 py-2 border-2 text-center" href="/about"
+            >About</a
+          >
+        </li>
+        <li>
+          <a class="block my-2 px-4 py-2 border-2 text-center" href="/contact"
+            >Contact</a
+          >
+        </li>
+      </ul>
+    </div>
+
+    <!-- Header -->
+    <header class="bg-slate-50 px-2">
+      <div
+        class="lg:w-3/4 mx-auto flex justify-between md:justify-start items-center"
+      >
+        <img src="avatar_face.png" class="w-20 object-cover" alt="" />
+
+        <!-- <h1 class="text-3xl font-lobster text-gray-800 md:hidden">Ilwes</h1> -->
+        <img src="ilwes.png" class="h-24" alt="" />
+
+        <!-- Nav Menu -->
+        <nav class="hidden md:flex mx-auto">
+          <ul class="flex space-x-4 text-xl font-kanit">
+            <li>
+              <a
+                href="/"
+                class="block hover:font-bold hover:text-green-400 hover:scale-105 duration-200"
+                >Home</a
+              >
+            </li>
+            <li>
+              <a
+                href="/about"
+                class="block hover:font-bold hover:text-green-400 hover:scale-105 duration-200"
+                >About</a
+              >
+            </li>
+            <li>
+              <a
+                href="/contact"
+                class="block hover:font-bold hover:text-green-400 hover:scale-105 duration-200"
+                >Contact</a
+              >
+            </li>
+          </ul>
+        </nav>
+
+        <div class="hm-menu__container" onclick="myFunction(this)">
+          <div class="bar1"></div>
+          <div class="bar2"></div>
+          <div class="bar3"></div>
+        </div>
+      </div>
     </header>
+
     <!-- MAIN -->
-    <main class="flex-col font-barlow">
-      <section class="bg-orange-300 h-96">
-        <h1 class="text-3xl">Section 1</h1>
-        <h2 class="text-2xl">Subtitle</h2>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat sed
-          ipsa sint quibusdam aliquam assumenda maxime! Itaque, id doloribus.
-        </p>
-      </section>
-      <section class="bg-blue-300 h-96">
-        <h1 class="text-3xl">Products</h1>
-        <h2 class="text-2xl">Subtitle</h2>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus
-          sit suscipit illo necessitatibus? Minus ut vero voluptatum labore
-          perferendis quos, odio unde maiores, atque in excepturi deserunt
-          debitis quibusdam ab.
-        </p>
-      </section>
-      <section class="bg-purple-300 h-96">
-        <h1 class="text-3xl">Products</h1>
-        <h2 class="text-2xl">Subtitle</h2>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus
-          sit suscipit illo necessitatibus? Minus ut vero voluptatum labore
-          perferendis quos, odio unde maiores, atque in excepturi deserunt
-          debitis quibusdam ab.
-        </p>
-      </section>
-      <section class="bg-yellow-300 h-96">
-        <h1 class="text-3xl">Products</h1>
-        <h2 class="text-2xl">Subtitle</h2>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus
-          sit suscipit illo necessitatibus? Minus ut vero voluptatum labore
-          perferendis quos, odio unde maiores, atque in excepturi deserunt
-          debitis quibusdam ab.
-        </p>
-      </section>
+    <!-- <main class="my-8 p-8 flex flex-col space-y-8 font-barlow"> -->
+    <main class="min-h-screen">
+      <div
+        class="mx-auto container xl:w-3/4 my-8 p-8 font-barlow grid gap-8 align-middle justify-items-center grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4"
+      >
+        <section
+          class="relative h-96 p-4 rounded-2xl shadow-lg bg-white hover:scale-105 duration-200 cursor-pointer"
+        >
+          <h1 class="text-3xl">Section 1</h1>
+          <h2 class="text-2xl">Subtitle</h2>
+          <div class="flex flex-wrap gap-x-2">
+            <a href="" class="text-lg text-yellow-500 font-bold">#JS</a>
+            <a href="" class="text-lg text-violet-500 font-bold">#Backend</a>
+            <a href="" class="text-lg text-green-500 font-bold">#NodeJs</a>
+            <a href="" class="text-lg text-blue-500 font-bold">#PostgreSQL</a>
+            <a href="" class="text-lg text-red-500 font-bold">#Redis</a>
+          </div>
+          <p class="mt-6">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat sed
+            ipsa sint quibusdam aliquam assumenda maxime! Itaque, id doloribus.
+          </p>
+          <a
+            href=""
+            class="p-2 rounded-lg border-2 absolute bottom-4 right-4 hover:bg-slate-200"
+            >Read More</a
+          >
+        </section>
+        <section
+          class="relative h-96 max-w-xs p-4 rounded-2xl shadow-lg bg-white hover:scale-105 duration-200 cursor-pointer"
+        >
+          <h1 class="text-3xl">Products</h1>
+          <h2 class="text-2xl">Subtitle</h2>
+          <p class="mt-6">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus
+            sit suscipit illo necessitatibus? Minus ut vero voluptatum labore
+            perferendis quos, odio unde maiores, atque in excepturi deserunt
+            debitis quibusdam ab.
+          </p>
+          <a
+            href=""
+            class="p-2 rounded-lg border-2 absolute bottom-4 right-4 hover:bg-slate-200"
+            >Read More</a
+          >
+        </section>
+        <section
+          class="relative h-96 max-w-xs p-4 rounded-2xl shadow-lg bg-white hover:scale-105 duration-200 cursor-pointer"
+        >
+          <h1 class="text-3xl">Products</h1>
+          <h2 class="text-2xl">Subtitle</h2>
+          <p class="mt-6">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus
+            sit suscipit illo necessitatibus? Minus ut vero voluptatum labore
+            perferendis quos, odio unde maiores, atque in excepturi deserunt
+            debitis quibusdam ab.
+          </p>
+          <a
+            href=""
+            class="p-2 rounded-lg border-2 absolute bottom-4 right-4 hover:bg-slate-200"
+            >Read More</a
+          >
+        </section>
+        <section
+          class="relative h-96 max-w-xs p-4 rounded-2xl shadow-lg bg-white hover:scale-105 duration-200 cursor-pointer"
+        >
+          <h1 class="text-3xl">Products</h1>
+          <h2 class="text-2xl">Subtitle</h2>
+          <p class="mt-6">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus
+            sit suscipit illo necessitatibus? Minus ut vero voluptatum labore
+            perferendis quos, odio unde maiores, atque in excepturi deserunt
+            debitis quibusdam ab.
+          </p>
+          <a
+            href=""
+            class="p-2 rounded-lg border-2 absolute bottom-4 right-4 hover:bg-slate-200"
+            >Read More</a
+          >
+        </section>
+      </div>
     </main>
     <!-- FOOTER -->
-    <footer class="font-inter text-center">Copyright 2023, Bsafarli &copy;</footer>
+    <footer class="p-6 font-inter text-center bg-slate-100">
+      Copyright 2023, Bsafarli &copy;
+    </footer>
+
+    <script>
+      const sideMenu = document.getElementById('side-menu');
+      const backdrop = document.getElementById('backdrop');
+      console.log(sideMenu);
+      function myFunction(x) {
+        sideMenu.classList.toggle('side-menu__hide');
+        backdrop.classList.add('side-menu__hide');
+        x.classList.toggle('change');
+      }
+
+      // JavaScript code to style the active navigation menu item based on the current path
+      const currentPath = window.location.pathname;
+      const navLinks = document.querySelectorAll('nav a');
+
+      for (const link of navLinks) {
+        if (link.getAttribute('href') === currentPath) {
+          link.classList.add('active-nav');
+        } else {
+          link.classList.remove('active-nav');
+        }
+      }
+    </script>
   </body>
 </html>
